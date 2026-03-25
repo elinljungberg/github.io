@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Automated Controls of Clients – Elin Ljungberg</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --ink: #1a1814;
+      --accent: #607DE8;
+      --muted: #8a8070;
+      --card: #ffffff;
+      --border: #e2ddd6;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+    }
+    nav .logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; text-decoration: none; color: var(--ink); }
+    nav .back {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--muted);
+      font-size: 0.875rem; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav .back:hover { color: var(--accent); }
+    nav .back::before { content: '←'; font-size: 1rem; }
+
+    /* HERO */
+    .project-hero {
+      padding: 5rem 4rem 3rem;
+      max-width: 900px;
+    }
+    .project-hero .tag {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    .project-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1; margin-bottom: 1.5rem;
+    }
+    .project-hero .intro {
+      font-size: 1.1rem; color: var(--muted); font-weight: 300;
+      max-width: 600px; margin-bottom: 3rem;
+    }
+    .project-meta {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+    .meta-item { }
+    .meta-item .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-item .value { font-size: 1rem; font-weight: 500; }
+
+    /* CONTENT */
+    .project-content { max-width: 700px; padding: 0 4rem 6rem; }
+    .project-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; margin: 3rem 0 1rem;
+    }
+    .project-content p { font-size: 1rem; font-weight: 300; line-height: 1.9; margin-bottom: 1.2rem; color: var(--ink); }
+
+    /* IMAGE */
+    .project-image {
+      width: 100%; max-width: 860px;
+      margin: 0 4rem 3rem;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+    .project-image img { width: 100%; display: block; }
+    .project-image .img-placeholder {
+      height: 400px; display: flex; justify-content: center; align-items: center;
+      color: var(--muted); font-size: 0.875rem; letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .project-hero { padding: 3rem 1.5rem 2rem; }
+      .project-content { padding: 0 1.5rem 4rem; }
+      .project-image { margin: 0 1.5rem 2rem; }
+      .project-meta { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Elin Ljungberg</a>
+    <a href="index.html#projekt" class="back">All Projects</a>
+  </nav>
+
+  <div class="project-hero">
+    <p class="tag">Automated Controls of Clients / 2025–2026</p>
+    <h1>Automated Controls of Clients</h1>
+    <p class="intro"><!-- EDIT: Write a short intro about the project --></p>
+    <div class="project-meta">
+      <div class="meta-item">
+        <p class="label">Year</p>
+        <p class="value">2025–2026</p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Role</p>
+        <p class="value"><!-- EDIT: Your role --></p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Tools</p>
+        <p class="value"><!-- EDIT: Tools used --></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-image">
+    <!-- <img src="automated-controls-1.jpg" alt="Automated Controls of Clients" /> -->
+    <div class="img-placeholder">Add project image</div>
+  </div>
+
+  <div class="project-content">
+    <h2>Background</h2>
+    <p><!-- EDIT: Describe the background and problem --></p>
+
+    <h2>My Role</h2>
+    <p><!-- EDIT: Describe what you did --></p>
+
+    <h2>Process</h2>
+    <p><!-- EDIT: Describe your process --></p>
+
+    <h2>Outcome</h2>
+    <p><!-- EDIT: Describe the result --></p>
+  </div>
+
+</body>
+</html>
