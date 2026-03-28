@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Automated Controls of Clients – Elin Ljungberg</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --ink: #1a1814;
+      --accent: #607DE8;
+      --muted: #8a8070;
+      --card: #ffffff;
+      --border: #e2ddd6;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+    }
+    nav .logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; text-decoration: none; color: var(--ink); }
+    nav .back {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--muted);
+      font-size: 0.875rem; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav .back:hover { color: var(--muted); }
+    nav .back::before { content: '←'; font-size: 1rem; }
+
+    /* HERO */
+    .project-hero {
+      padding: 5rem 4rem 3rem;
+      max-width: 900px;
+    }
+    .project-hero .tag {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem;
+    }
+    .project-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1; margin-bottom: 1.5rem;
+    }
+    .project-hero .intro {
+      font-size: 1.1rem; color: var(--muted); font-weight: 300;
+      max-width: 600px; margin-bottom: 3rem;
+    }
+    .project-meta {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+    .meta-item .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-item .value { font-size: 1rem; font-weight: 500; }
+
+    /* CONTENT */
+    .project-content { max-width: 700px; padding: 0 4rem 6rem; }
+    .project-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; margin: 3.5rem 0 1rem;
+    }
+    .project-content h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin: 2.5rem 0 0.75rem;
+    }
+    .project-content p { font-size: 1rem; font-weight: 300; line-height: 1.9; margin-bottom: 1.2rem; color: var(--ink); }
+
+    /* IMAGES — full width */
+    .project-image {
+      width: calc(100% - 8rem);
+      max-width: 860px;
+      margin: 0 4rem 1rem;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+    .project-image img { width: 100%; display: block; }
+    .project-image .img-placeholder {
+      height: 420px; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; gap: 0.75rem;
+      color: var(--muted); font-size: 0.875rem; letter-spacing: 0.05em;
+      background: linear-gradient(135deg, #f0ede8 0%, #e8e4de 100%);
+    }
+    .project-image .img-placeholder .icon {
+      width: 40px; height: 40px; opacity: 0.35;
+    }
+    .img-caption {
+      width: calc(100% - 8rem);
+      max-width: 860px;
+      margin: 0 4rem 3rem;
+      font-size: 0.8rem; color: var(--muted); font-weight: 300;
+      letter-spacing: 0.02em; padding-top: 0.6rem;
+    }
+
+    /* IMAGE GRID — two columns */
+    .image-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      width: calc(100% - 8rem);
+      max-width: 860px;
+      margin: 0 4rem 1rem;
+    }
+    .image-grid .project-image {
+      width: 100%; margin: 0;
+    }
+    .image-grid .project-image .img-placeholder {
+      height: 260px;
+    }
+    .image-grid .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      width: calc(100% - 8rem);
+      max-width: 860px;
+      margin: 1rem 4rem 0;
+      border: none; border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .project-hero { padding: 3rem 1.5rem 2rem; }
+      .project-content { padding: 0 1.5rem 4rem; }
+      .project-image,
+      .img-caption,
+      .image-grid,
+      .callout,
+      .section-divider { margin-left: 1.5rem; margin-right: 1.5rem; width: calc(100% - 3rem); }
+      .project-meta { gap: 1.5rem; }
+      .image-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Elin Ljungberg</a>
+    <a href="index.html#projekt" class="back">All Projects</a>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────── -->
+  <div class="project-hero">
+    <p class="tag">Automated Controls of Clients / 2025–Present</p>
+    <h1>Client Due Diligence</h1>
+    <p class="intro">
+      A complex, regulation-driven system that transforms how client onboarding and ongoing monitoring is handled. From manual, paper-heavy workflows to a structured digital process built around the people who use it every day.
+    </p>
+    <div class="project-meta">
+      <div class="meta-item">
+        <p class="label">Year</p>
+        <p class="value">2025–Present</p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Role</p>
+        <p class="value">Lead Designer</p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Tools</p>
+        <p class="value">Figma &amp; Claude Code</p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Deliverables</p>
+        <p class="value">Process maps · UI design · Usability tests</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero image -->
+  <div class="project-image">
+    <img src="automated-controls-hero.jpg" alt="Overview of the system" />
+  </div>
+  <p class="img-caption"><!-- EDIT: Caption for hero image --></p>
+
+  <hr class="section-divider" />
+
+  <!-- ─── CONTENT ───────────────────────────────────────────── -->
+  <div class="project-content">
+
+    <h2>Background</h2>
+    <p>
+      The client came to us with a process that was held together by spreadsheets, emails, and individual routines that varied from person to person. The work was time-consuming and error-prone, and there was no shared overview of where any given client stood in the process at any point in time.
+    </p>
+    <p>
+      The goal was to build a system that could bring structure and consistency to the entire workflow, from the moment a potential new client is identified through to a final decision. It needed to handle the complexity of the underlying regulation while still being approachable enough for the whole team to use. A key part of the solution was building in automated checks for certain parts of the process, freeing up time for the tasks that actually need human judgement.
+    </p>
+
+  </div>
+
+  <div class="project-content">
+
+    <h2>My Role</h2>
+    <p>
+      I was lead designer throughout the entire project, from the first discovery sessions to supporting the development team during the build phase. This meant owning both the strategic design work and the hands-on craft.
+    </p>
+    <p>
+      Early on, I was responsible for establishing a shared understanding of the problem space. That involved organising and running workshops with a dedicated working group on the client side, mapping out how the work actually happened today versus how it should happen, and translating regulatory requirements into design requirements that the team could act on.
+    </p>
+    <p>
+      Later, the role shifted toward interface design and testing. Making sure that what we were building matched how people actually think and work, and flagging issues before they became expensive to fix.
+    </p>
+
+  </div>
+
+  <hr class="section-divider" />
+
+  <div class="project-content">
+    <h2>Process</h2>
+
+    <h3>Discovery & requirements</h3>
+    <p>
+      I worked closely with a designated working group on the client side, a mix of people who do this work every day and stakeholders with strategic responsibility for the process. Together we mapped out the full scope of requirements: what needed to happen, in what order, and why.
+    </p>
+    <p>
+      The requirements gathering sessions were structured but deliberately open. I wanted to surface the informal workarounds and edge cases that never make it into formal documentation. Those turned out to be some of the most important inputs to the design.
+    </p>
+  </div>
+
+  <div class="project-content">
+    <h3>Process mapping & swimlanes</h3>
+    <p>
+      Once I had a solid picture of the requirements, I translated them into process maps and swimlane diagrams, one for each major flow in the system. The swimlanes were particularly useful for making the hand-offs between roles visible: where does one person's responsibility end and another's begin? Where does the process get stuck today, and why?
+    </p>
+    <p>
+      These diagrams became a shared language for the project. They went through multiple rounds of review with the working group, and each iteration uncovered something we hadn't accounted for. By the time we moved into UI design, there were very few surprises.
+    </p>
+  </div>
+
+  <div class="project-content">
+    <h3>UI Design</h3>
+    <p>
+      The interface needed to handle a lot of complexity without feeling complex. Users are working through detailed checklists, reviewing flagged information, and making decisions that need to be documented. The design challenge was to make that manageable.
+    </p>
+    <p>
+      I structured the work around the key tasks rather than around the underlying data model. That meant spending significant time on information hierarchy. What does someone need to see first? What can wait? What should require an explicit action before it's visible at all? The goal was a UI where the right next step is always obvious.
+    </p>
+  </div>
+
+  <!-- UI design image — full width -->
+  <div class="project-image">
+    <img src="automated-controls-ui-1.jpg" alt="UI overview" />
+  </div>
+  <p class="img-caption"><!-- EDIT: Caption --></p>
+
+  <!-- Two-column for detail screens -->
+  <div class="image-grid">
+    <div class="project-image">
+      <img src="automated-controls-ui-2.jpg" alt="UI detail" />
+    </div>
+    <div class="project-image">
+      <img src="automated-controls-ui-3.jpg" alt="UI detail" />
+    </div>
+  </div>
+  <p class="img-caption"><!-- EDIT: Caption --></p>
+
+  <div class="project-content">
+    <h3>Usability Testing</h3>
+    <p>
+      I ran usability tests at two stages of the project: once with mid-fidelity prototypes to validate the overall structure, and again with a high-fidelity prototype closer to the end of the design phase. Participants were recruited from the working group, people who would actually be using the system.
+    </p>
+    <p>
+      For both rounds I built clickable prototypes to use during the sessions. These were built with Claude Code using the Figma MCP plugin, which let me go from design to interactive prototype quickly and keep the prototypes closely in sync with the actual designs.
+    </p>
+    <p>
+      The tests surfaced a handful of significant issues with how certain tasks were sequenced, and a recurring confusion around one key concept in the interface that we had used inconsistently. Both were fixed before development began, which saved meaningful time during the build.
+    </p>
+  </div>
+
+  <div class="project-content">
+    <h3>Build & Testing</h3>
+    <p>
+      During the build phase I stayed closely involved, reviewing implemented screens against the designs, flagging deviations, and helping the development team resolve ambiguities that came up. Some of the edge cases that hadn't been fully designed needed quick decisions, and having a designer available throughout made those moments faster and less costly.
+    </p>
+    <p>
+      I also participated in functional testing toward the end of the build, focusing on the interaction flows and task completion rather than technical correctness. That meant going through the system as a user would, with realistic scenarios, and documenting anything that felt off.
+    </p>
+  </div>
+
+  <hr class="section-divider" />
+
+  <div class="project-content">
+    <h2>Outcome</h2>
+    <p>
+      The system is currently in its final stages before rollout. The working group that was involved throughout the project has been positive about how well the result reflects the way they actually work, which is a direct consequence of the time invested early in understanding the process before touching any interface.
+    </p>
+    <p>
+      For me personally, this project confirmed the value of staying in a design lead role across the full lifecycle, from discovery through build. The continuity meant that decisions made early had a clear thread all the way through to what got built, and that the design wasn't lost in translation.
+    </p>
+  </div>
+
+</body>
+</html>
