@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Design System – Elin Ljungberg</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --ink: #1a1814;
+      --accent: #8a8070;
+      --muted: #8a8070;
+      --card: #ffffff;
+      --border: #e2ddd6;
+      --soft: #f0ede7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+    }
+    nav .logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; text-decoration: none; color: var(--ink); }
+    nav .back {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--muted);
+      font-size: 0.875rem; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav .back:hover { color: var(--accent); }
+    nav .back::before { content: '←'; font-size: 1rem; }
+
+    /* HERO */
+    .project-hero {
+      padding: 5rem 4rem 3rem;
+      max-width: 900px;
+    }
+    .project-hero .tag {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    .project-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1; margin-bottom: 1.5rem;
+    }
+    .project-hero .intro {
+      font-size: 1.1rem; color: var(--muted); font-weight: 300;
+      max-width: 600px; margin-bottom: 3rem;
+    }
+    .project-meta {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+    .meta-item .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-item .value { font-size: 1rem; font-weight: 500; }
+
+    /* IMAGE BLOCKS */
+    .project-image {
+      width: calc(100% - 8rem);
+      max-width: 860px;
+      margin: 0 4rem 3rem;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+    .project-image img { width: 100%; display: block; }
+    .project-image .img-placeholder {
+      height: 400px; display: flex; justify-content: center; align-items: center;
+      color: var(--muted); font-size: 0.875rem; letter-spacing: 0.05em;
+      flex-direction: column; gap: 0.5rem;
+    }
+    .project-image .img-placeholder span { font-size: 1.5rem; opacity: 0.4; }
+
+    /* CONTENT */
+    .project-content { max-width: 700px; padding: 0 4rem 6rem; }
+
+    .project-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; margin: 4rem 0 1rem;
+    }
+    .project-content h2:first-child { margin-top: 0; }
+
+    .project-content p {
+      font-size: 1rem; font-weight: 300; line-height: 1.9;
+      margin-bottom: 1.2rem; color: var(--ink);
+    }
+
+    /* HIGHLIGHT / PULL QUOTE */
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.5rem;
+      margin: 2rem 0;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── BUTTON COMPONENT DOCUMENTATION ── */
+
+    /* DS button tokens */
+    :root {
+      --ds-purple:       #7c3aed;
+      --ds-purple-hover: #5b21b6;
+      --ds-purple-focus: #7c3aed;
+      --ds-red:          #dc2626;
+      --ds-red-hover:    #991b1b;
+      --ds-gray:         #6b7280;
+      --ds-gray-hover:   #4b5563;
+
+      --ds-border-radius: 6px;
+      --ds-font-size-sm: 0.8rem;
+      --ds-font-size-md: 0.9rem;
+      --ds-font-size-lg: 1rem;
+    }
+
+    /* ── Base button reset ── */
+    .ds-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4em;
+      border: none;
+      border-radius: var(--ds-border-radius);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s, opacity 0.15s;
+      outline: none;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* ── Sizes ── */
+    .ds-btn--sm  { padding: 0.45rem 0.85rem; font-size: var(--ds-font-size-sm); }
+    .ds-btn--md  { padding: 0.6rem  1.1rem;  font-size: var(--ds-font-size-md); }
+    .ds-btn--lg  { padding: 0.75rem 1.4rem;  font-size: var(--ds-font-size-lg); }
+    .ds-btn--icon-only.ds-btn--md  { padding: 0.6rem;  }
+    .ds-btn--icon-only.ds-btn--sm  { padding: 0.45rem; }
+
+    /* ── PRIMARY ── */
+    .ds-btn--primary                     { background: var(--ds-purple); color: #fff; }
+    .ds-btn--primary:hover               { background: var(--ds-purple-hover); }
+    .ds-btn--primary:focus-visible       { box-shadow: 0 0 0 3px rgba(124,58,237,.35); background: var(--ds-purple); }
+    .ds-btn--primary.ds-btn--destructive { background: var(--ds-red); }
+    .ds-btn--primary.ds-btn--destructive:hover { background: var(--ds-red-hover); }
+    .ds-btn--primary.ds-btn--destructive:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,.35); }
+    .ds-btn--primary.ds-btn--neutral     { background: var(--ds-gray); }
+    .ds-btn--primary.ds-btn--neutral:hover { background: var(--ds-gray-hover); }
+    .ds-btn--primary[disabled]           { background: #d1c9e4; color: #a89cc8; cursor: not-allowed; }
+
+    /* ── SECONDARY ── */
+    .ds-btn--secondary                     { background: #fff; color: var(--ds-purple); border: 1.5px solid var(--ds-purple); }
+    .ds-btn--secondary:hover               { background: #f3eeff; }
+    .ds-btn--secondary:focus-visible       { box-shadow: 0 0 0 3px rgba(124,58,237,.25); }
+    .ds-btn--secondary.ds-btn--destructive { color: var(--ds-red); border-color: var(--ds-red); }
+    .ds-btn--secondary.ds-btn--destructive:hover { background: #fff5f5; }
+    .ds-btn--secondary.ds-btn--destructive:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,.25); }
+    .ds-btn--secondary.ds-btn--neutral     { color: var(--ds-gray); border-color: var(--ds-gray); }
+    .ds-btn--secondary.ds-btn--neutral:hover { background: #f5f5f5; }
+    .ds-btn--secondary[disabled]           { background: #fafafa; color: #c4b8de; border-color: #ddd6f3; cursor: not-allowed; }
+
+    /* ── TERTIARY ── */
+    .ds-btn--tertiary                     { background: transparent; color: var(--ds-purple); }
+    .ds-btn--tertiary:hover               { background: #f3eeff; }
+    .ds-btn--tertiary:focus-visible       { box-shadow: 0 0 0 3px rgba(124,58,237,.25); }
+    .ds-btn--tertiary.ds-btn--destructive { color: var(--ds-red); }
+    .ds-btn--tertiary.ds-btn--destructive:hover { background: #fff5f5; }
+    .ds-btn--tertiary.ds-btn--destructive:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,.25); }
+    .ds-btn--tertiary.ds-btn--neutral     { color: var(--ds-gray); }
+    .ds-btn--tertiary.ds-btn--neutral:hover { background: #f5f5f5; }
+    .ds-btn--tertiary[disabled]           { color: #c4b8de; cursor: not-allowed; }
+    .ds-btn--tertiary[disabled]:hover     { background: transparent; }
+
+    /* ── COMPONENT DOC LAYOUT ── */
+    .comp-doc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    .comp-doc__header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .comp-doc__title {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .comp-doc__body {
+      padding: 2rem 1.5rem;
+    }
+
+    /* ── VARIANTS TABLE ── */
+    .variants-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .variants-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      padding: 0 1rem 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .variants-table td {
+      padding: 1rem 1rem 1rem 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .variants-table tr:last-child td { border-bottom: none; }
+    .variants-table .row-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 400;
+      white-space: nowrap;
+      padding-right: 1.5rem;
+    }
+    .btn-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── STATES GRID ── */
+    .states-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .states-grid__section {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .states-grid__section:last-child {
+      border-bottom: none;
+    }
+    .states-grid__label {
+      font-size: 12px !important;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 0.85rem;
+    }
+    .states-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── SIZES SECTION ── */
+    .sizes-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 2rem;
+    }
+    .size-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .size-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── DO / DON'T ── */
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .do-dont__card {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+    }
+    .do-dont__label {
+      padding: 0.5rem 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .do-dont__card--do   .do-dont__label { background: #f0fff4; color: #16a34a; border-bottom: 1px solid #bbf7d0; }
+    .do-dont__card--dont .do-dont__label { background: #fff0f0; color: #dc2626; border-bottom: 1px solid #fecaca; }
+    .do-dont__card--do   .do-dont__label::before { content: '✓'; }
+    .do-dont__card--dont .do-dont__label::before { content: '✕'; }
+    .do-dont__body {
+      padding: 0;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .do-dont__body p {
+      font-size: 0.85rem !important;
+      color: var(--muted) !important;
+      margin-bottom: 0 !important;
+      line-height: 1.5 !important;
+      padding: 1rem 1.25rem 1.25rem;
+    }
+    .do-dont__example {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .do-dont__example .ds-btn {
+      flex-shrink: 0;
+    }
+
+    /* WCAG */
+    .wcag-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .wcag-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      padding: 0 1rem 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .wcag-table td {
+      padding: 0.75rem 1rem 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      color: var(--ink);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .wcag-table tr:last-child td { border-bottom: none; }
+    .wcag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .wcag-badge--pass { background: #f0fff4; color: #16a34a; }
+    .wcag-badge--pass::before { content: '✓'; }
+
+    /* DECISION CARDS */
+    .decisions { display: flex; flex-direction: column; gap: 1.25rem; margin: 2rem 0; }
+    .decision-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+    }
+    .decision-card .decision-title {
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .decision-card .decision-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .decision-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.7;
+    }
+
+    /* IMPACT METRICS */
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+    .metric-card .metric-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .metric-card .metric-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* REFLECTION */
+    .reflection {
+      background: var(--soft);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .reflection h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .reflection ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .reflection ul li {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--ink);
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.7;
+    }
+    .reflection ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+
+    /* SECTION DIVIDER */
+    .section-divider {
+      width: calc(100% - 8rem);
+      max-width: 860px;
+      margin: 0 4rem 0;
+      height: 1px;
+      background: var(--border);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .project-hero { padding: 3rem 1.5rem 2rem; }
+      .project-content { padding: 0 1.5rem 4rem; }
+      .project-image { width: calc(100% - 3rem); margin: 0 1.5rem 2rem; }
+      .section-divider { width: calc(100% - 3rem); margin: 0 1.5rem; }
+      .project-meta { gap: 1.5rem; }
+      .comparison { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Elin Ljungberg</a>
+    <a href="index.html#projekt" class="back">All Projects</a>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────────────────── -->
+  <div class="project-hero">
+    <p class="tag">Design System · 2025</p>
+    <h1>Rebuilding a design system for a new brand era</h1>
+    <p class="intro">When the company rebranded, we didn't just swap logos. We took the opportunity to rebuild our fragile design system with a new token structure, expanded component library, proper documentation, and full WCAG compliance.</p>
+
+    <div class="project-meta">
+      <div class="meta-item">
+        <p class="label">Year</p>
+        <p class="value">2025</p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Role</p>
+        <!-- EDIT: T.ex. "Lead UX Designer" eller "UX Designer & System Architect" -->
+        <p class="value">UX Designer</p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Tools</p>
+        <p class="value">Figma</p>
+      </div>
+      <div class="meta-item">
+        <p class="label">Team</p>
+        <!-- EDIT: Hur stort team, vilka roller ingick? -->
+        <p class="value">Design + Frontend</p>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ─── CONTENT ───────────────────────────────────────────────────────────── -->
+  <div class="project-content">
+
+    <!-- BACKGROUND -->
+    <h2>The problem</h2>
+    <p>The company had a design system, but it was showing its age. Built up over several years, it had accumulated inconsistencies, undocumented workarounds, and a token structure that no longer reflected how the product actually worked. Components varied across different parts of the product, accessibility had never been formally addressed, and the codebase had grown fragile in ways that made even small changes risky.</p>
+    <p>The catalyst for change came from marketing: a full rebrand was in the works, and it would affect every color, typeface, and visual pattern in the product. Rather than patching the new brand onto the old system, we used the moment as an opportunity to rebuild properly and do it right this time.</p>
+
+    <div class="pull-quote">
+      The rebrand wasn't just a visual refresh. It was the forcing function we needed to fix what had been silently broken for years.
+    </div>
+
+    <!-- MY ROLE -->
+    <h2>My role</h2>
+    <p>I led the design side of the rebuild, auditing what existed, defining the new token and variable structure, expanding the component library, and writing the documentation. I worked closely with frontend developers throughout to make sure design decisions translated cleanly into code and that the new system was actually more stable than the one it replaced.</p>
+    <p>Accessibility was a shared responsibility, but I owned making sure every component and style guide met WCAG, something the old system had ignored.</p>
+
+  </div>
+
+  <div class="project-content">
+
+    <!-- PROCESS -->
+    <h2>Process</h2>
+    <p>We started with a thorough audit of the existing system, cataloging every component, token, and style to understand what was worth keeping and what needed to go. The old token structure had grown organically and inconsistently, with raw hex values scattered throughout components rather than a proper semantic layer. That was the first thing to fix.</p>
+    <p>The new token and variable structure was designed in close collaboration with the frontend team, so that names made sense both in Figma and in code. With the brand change driving new color palettes and typography, we rebuilt the primitive and semantic token layers from scratch, making theming systematic rather than manual.</p>
+    <p>Alongside the token work, we expanded the component library significantly. Each component was built to meet WCAG AA as a baseline, with contrast ratios, focus states, and keyboard navigation documented as part of the spec rather than treated as afterthoughts. New documentation was written for every component, covering usage, variants, dos and don'ts, and accessibility notes.</p>
+
+    <!-- BUTTON COMPONENT DOC -->
+    <h2>Button Component</h2>
+    <p>Below is a sample from the component documentation written as part of the design system, showing how the button component is specified across variants, states, and sizes.</p>
+
+    <!-- 1. VARIANTS TABLE -->
+    <div class="comp-doc">
+      <div class="comp-doc__header">
+        <span class="comp-doc__title">Variants &amp; states</span>
+      </div>
+      <div class="comp-doc__body">
+        <table class="variants-table">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Primary</th>
+              <th>Secondary</th>
+              <th>Tertiary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">Default</td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--primary">Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--secondary">Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--tertiary">Button</button></div></td>
+            </tr>
+            <tr>
+              <td class="row-label">With leading icon</td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--primary"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg> Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--secondary"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg> Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--tertiary"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg> Button</button></div></td>
+            </tr>
+            <tr>
+              <td class="row-label">With trailing icon</td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--primary">Button <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg></button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--secondary">Button <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg></button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--tertiary">Button <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg></button></div></td>
+            </tr>
+            <tr>
+              <td class="row-label">Icon only</td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--primary ds-btn--icon-only" aria-label="Add"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg></button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--secondary ds-btn--icon-only" aria-label="Add"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg></button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--tertiary ds-btn--icon-only" aria-label="Add"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2Z"/></svg></button></div></td>
+            </tr>
+            <tr>
+              <td class="row-label">Destructive</td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--primary ds-btn--destructive">Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--secondary ds-btn--destructive">Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--tertiary ds-btn--destructive">Button</button></div></td>
+            </tr>
+            <tr>
+              <td class="row-label">Disabled</td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--primary" disabled>Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--secondary" disabled>Button</button></div></td>
+              <td><div class="btn-cell"><button class="ds-btn ds-btn--md ds-btn--tertiary" disabled>Button</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2. HOVER + FOCUS STATES -->
+    <div class="comp-doc">
+      <div class="comp-doc__header">
+        <span class="comp-doc__title">Interactive states</span>
+      </div>
+      <div class="states-grid">
+        <div class="states-grid__section">
+          <p class="states-grid__label">Hover / Default</p>
+          <div class="states-row">
+            <button class="ds-btn ds-btn--md ds-btn--primary" style="background:var(--ds-purple-hover)">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--secondary" style="background:#f3eeff">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--tertiary" style="background:#f3eeff">Button</button>
+          </div>
+        </div>
+        <div class="states-grid__section">
+          <p class="states-grid__label">Hover / Destructive</p>
+          <div class="states-row">
+            <button class="ds-btn ds-btn--md ds-btn--primary ds-btn--destructive" style="background:var(--ds-red-hover)">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--secondary ds-btn--destructive" style="background:#fff5f5">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--tertiary ds-btn--destructive" style="background:#fff5f5">Button</button>
+          </div>
+        </div>
+        <div class="states-grid__section">
+          <p class="states-grid__label">Focus / Default</p>
+          <div class="states-row">
+            <button class="ds-btn ds-btn--md ds-btn--primary" style="box-shadow:0 0 0 3px rgba(124,58,237,.35)">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--secondary" style="box-shadow:0 0 0 3px rgba(124,58,237,.25)">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--tertiary" style="box-shadow:0 0 0 3px rgba(124,58,237,.25)">Button</button>
+          </div>
+        </div>
+        <div class="states-grid__section">
+          <p class="states-grid__label">Focus / Destructive</p>
+          <div class="states-row">
+            <button class="ds-btn ds-btn--md ds-btn--primary ds-btn--destructive" style="box-shadow:0 0 0 3px rgba(220,38,38,.35)">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--secondary ds-btn--destructive" style="box-shadow:0 0 0 3px rgba(220,38,38,.25)">Button</button>
+            <button class="ds-btn ds-btn--md ds-btn--tertiary ds-btn--destructive" style="box-shadow:0 0 0 3px rgba(220,38,38,.25)">Button</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SIZES -->
+    <div class="comp-doc">
+      <div class="comp-doc__header">
+        <span class="comp-doc__title">Sizes</span>
+      </div>
+      <div class="comp-doc__body">
+        <div class="sizes-row">
+          <div class="size-group">
+            <span class="size-label">Small</span>
+            <button class="ds-btn ds-btn--sm ds-btn--primary">Button</button>
+          </div>
+          <div class="size-group">
+            <span class="size-label">Medium (default)</span>
+            <button class="ds-btn ds-btn--md ds-btn--primary">Button</button>
+          </div>
+          <div class="size-group">
+            <span class="size-label">Large</span>
+            <button class="ds-btn ds-btn--lg ds-btn--primary">Button</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. DO / DON'T -->
+    <div class="do-dont">
+      <div class="do-dont__card do-dont__card--do">
+        <div class="do-dont__label">Do</div>
+        <div class="do-dont__body">
+          <div class="do-dont__example">
+            <button class="ds-btn ds-btn--md ds-btn--primary">Save changes</button>
+            <button class="ds-btn ds-btn--md ds-btn--secondary">Cancel</button>
+          </div>
+          <p>Use Primary for the main action and Secondary for the supporting one. Keep the hierarchy clear.</p>
+        </div>
+      </div>
+      <div class="do-dont__card do-dont__card--dont">
+        <div class="do-dont__label">Don't</div>
+        <div class="do-dont__body">
+          <div class="do-dont__example">
+            <button class="ds-btn ds-btn--md ds-btn--primary">Save</button>
+            <button class="ds-btn ds-btn--md ds-btn--primary">Cancel</button>
+          </div>
+          <p>Avoid using Primary for multiple actions side by side. It creates visual competition and makes it unclear which action is the main one.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. ACCESSIBILITY -->
+    <div class="comp-doc">
+      <div class="comp-doc__header">
+        <span class="comp-doc__title">Accessibility</span>
+      </div>
+      <div class="comp-doc__body">
+        <table class="wcag-table">
+          <thead>
+            <tr>
+              <th>Criteria</th>
+              <th>Notes</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Contrast ratio (text)</td>
+              <td>Primary: white on #7c3aed — 5.9:1. Secondary and Tertiary: #7c3aed on white — 5.9:1.</td>
+              <td><span class="wcag-badge wcag-badge--pass">AA</span></td>
+            </tr>
+            <tr>
+              <td>Focus visible</td>
+              <td>All variants have a visible focus ring on keyboard navigation.</td>
+              <td><span class="wcag-badge wcag-badge--pass">AA</span></td>
+            </tr>
+            <tr>
+              <td>Disabled state</td>
+              <td>Disabled buttons are not focusable and do not respond to pointer events.</td>
+              <td><span class="wcag-badge wcag-badge--pass">AA</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DESIGN DECISIONS -->
+    <h2>Key design decisions</h2>
+    <p>A design system is a series of small, permanent decisions. Here are the ones I'm most proud of.</p>
+
+    <div class="decisions">
+      <div class="decision-card">
+        <p class="decision-title">Rebuilding the token structure from the ground up</p>
+        <p>The old system used raw values directly in components with no semantic layer, no theming logic. We introduced a two-tier structure separating primitive tokens (raw values) from semantic tokens (like <code>color-action-primary</code>).</p>
+      </div>
+      <div class="decision-card">
+        <p class="decision-title">WCAG compliance as a design constraint, not a checklist</p>
+        <p>Accessibility had been treated as something to fix after the fact in the old system. This time, contrast ratios, focus states, and touch targets were defined at the token level, so any component built from the system inherits accessible defaults rather than having to opt in.</p>
+      </div>
+      <div class="decision-card">
+        <p class="decision-title">Documentation that explains the why</p>
+        <p>The old system had almost no documentation, which meant every decision lived in someone's head. We wrote usage guidelines for every component, including the reasoning behind decisions, so future designers can make informed exceptions rather than just guessing at intent.</p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
